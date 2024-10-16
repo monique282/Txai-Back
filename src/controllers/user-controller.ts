@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, HttpStatus, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { UserService } from './user.service'; 
+import { UserService } from '../services/user-service';
 
 @Controller('health')
 export class HealthController {
@@ -16,11 +16,11 @@ export class UsersController {
 
   @Post()
   async usersPost(
-    @Body('mode') mode: string,
+    @Body('cpf') cpf: number,
     @Body('password') password: string,
     @Res() res: Response,
   ) {
-    const user = await this.userService.loginUser({ mode, password });
+    const user = await this.userService.loginUser({ cpf, password });
 
     return res.status(HttpStatus.OK).send(user);
   }
