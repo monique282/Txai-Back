@@ -1,6 +1,15 @@
-import { Controller, Post, Get, Body, HttpStatus, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  HttpStatus,
+  Res,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { UserService } from '../services/user-service';
+import { CreateUserDto } from 'src/schemas/user-schema';
 
 @Controller('health')
 export class HealthController {
@@ -10,17 +19,16 @@ export class HealthController {
   }
 }
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
   async usersPost(
-    @Body('cpf') cpf: number,
-    @Body('password') password: string,
+    @Body(new ValidationPipe()) body: CreateUserDto,
     @Res() res: Response,
   ) {
-    const user = await this.userService.loginUser({ cpf, password });
+    const user = await this.userService.loginUser(body);
 
     return res.status(HttpStatus.OK).send(user);
   }

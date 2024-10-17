@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { UserRepository } from './user.repository';
+import { UserRepository } from 'src/repositories/user-repository';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async loginUser({ cpf, password }: { cpf: number; password: string }) {
-    const login = await this.userRepository.findByEmailPassword(cpf);
+  async loginUser({ cpf, password }: { cpf: string; password: string }) {
+    const login = await this.userRepository.findByCPFPassword(cpf);
 
     if (!login) {
       throw new UnauthorizedException('CPF não cadastrado');

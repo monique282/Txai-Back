@@ -10,7 +10,7 @@ datasource db {
 model TxaiUsers {
   id            Int      @id @default(autoincrement())
   email         String   @unique @db.VarChar(255)
-  cpf           Int      @unique
+  cpf           String      @unique
   password      String   @db.VarChar(255)
   name          String   @db.VarChar(50)
   nameUser      String   @db.VarChar(50)
