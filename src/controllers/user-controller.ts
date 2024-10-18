@@ -8,8 +8,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { UserService } from '../services/user-service';
-import { CreateUserDto } from 'src/schemas/user-schema';
+import { CreateUserDto, CreateUserRegisterDto } from 'src/schemas/user-schema';
+import {
+  userRegisterService,
+  userloginService,
+} from 'src/services/user-service';
 
 @Controller('health')
 export class HealthController {
@@ -20,16 +23,39 @@ export class HealthController {
 }
 
 @Controller('user')
-export class UsersController {
-  constructor(private readonly userService: UserService) {}
+export class UsersLoginController {
+  constructor(private readonly userloginService: userloginService) {}
 
   @Post()
-  async usersPost(
+  async usersLoginPost(
     @Body(new ValidationPipe()) body: CreateUserDto,
     @Res() res: Response,
   ) {
-    const user = await this.userService.loginUser(body);
+    const user = await this.userloginService.loginUser(body);
 
+    return res.status(HttpStatus.OK).send(user);
+  }
+}
+
+@Controller('register')
+export class UsersRegisterController {
+  constructor(private readonly userRegisterService: userRegisterService) {}
+
+  @Post()
+  async usersRegisterPost(
+    @Body(new ValidationPipe()) body: CreateUserRegisterDto,
+    @Res() res: Response,
+  ) {
+    const { cpf, password, email, name, nameUser, administrator } = body;
+
+    const user = await this.userRegisterService.registerUser(
+      cpf,
+      password,
+      email,
+      name,
+      nameUser,
+      administrator,
+    );
     return res.status(HttpStatus.OK).send(user);
   }
 }
