@@ -18,6 +18,20 @@ model TxaiUsers {
   photo         String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  items         Items[]  @relation("UserItems")
 
   @@map("txai_users")
+}
+
+model Items {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(50)
+  value     Int
+  amount    Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    Int
+  user      TxaiUsers @relation("UserItems", fields: [userId], references: [id])
+
+   @@map("items")
 }
