@@ -8,17 +8,18 @@ datasource db {
 }
 
 model TxaiUsers {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique @db.VarChar(255)
-  cpf           String   @unique
-  password      String   @db.VarChar(255)
-  name          String   @db.VarChar(50)
-  nameUser      String   @db.VarChar(50)
-  administrator Boolean  @default(false)
+  id            Int       @id @default(autoincrement())
+  email         String    @unique @db.VarChar(255)
+  cpf           String    @unique
+  password      String    @db.VarChar(255)
+  name          String    @db.VarChar(50)
+  nameUser      String    @db.VarChar(50)
+  administrator Boolean   @default(false)
   photo         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  items         Items[]  @relation("UserItems")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  items         Items[]   @relation("UserItems")
+  Session       Session[] @relation("UserItems")
 
   @@map("txai_users")
 }
@@ -33,5 +34,16 @@ model Items {
   userId    Int
   user      TxaiUsers @relation("UserItems", fields: [userId], references: [id])
 
-   @@map("items")
+  @@map("items")
+}
+
+model Session {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      TxaiUsers @relation("UserItems", fields: [userId], references: [id])
+  token     String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("session")
 }

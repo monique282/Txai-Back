@@ -15,6 +15,18 @@ export class UserLoginRepository {
 
     return user;
   }
+  async sessionToken(token: any, id: number) {
+    const session = await prisma.session.create({
+      data: {
+        token: token,
+        userId: id,
+      },
+      select: {
+        token: true,
+      },
+    });
+    return session;
+  }
 }
 
 @Injectable()

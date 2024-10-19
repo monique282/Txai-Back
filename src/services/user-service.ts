@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import {
   UserLoginRepository,
   UserRegisterRepository,
@@ -20,13 +21,21 @@ export class UserloginService {
     if (!passwordMatch) {
       throw new UnauthorizedException('senha não corresponde');
     }
+    const token = jwt.sign(
+      { userId: login.id, email: login.email },
+      process.env.JWT_SECRET,
+    );
+    const session = await this.UserLoginRepository.sessionToken(
+      token,
+      login.id,
+    );
 
     const list = {
       email: login.email,
       nameUser: login.nameUser,
     };
 
-    return [list];
+    return [list, session];
   }
 }
 

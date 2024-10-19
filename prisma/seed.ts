@@ -1,4 +1,4 @@
-import prisma from 'src/dataBase';
+import prisma from '../src/dataBase';
 
 async function main() {
   await prisma.txaiUsers.deleteMany();
