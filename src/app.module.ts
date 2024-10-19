@@ -8,7 +8,7 @@ import {
   UserLoginRepository,
   UserRegisterRepository,
 } from './repositories/user-repository';
-import { userRegisterService, userloginService } from './services/user-service';
+import { UserRegisterService, UserloginService } from './services/user-service';
 
 @Module({
   imports: [],
@@ -18,8 +18,8 @@ import { userRegisterService, userloginService } from './services/user-service';
     UsersRegisterController,
   ],
   providers: [
-    userloginService,
-    userRegisterService,
+    UserloginService,
+    UserRegisterService,
     UserRegisterRepository,
     UserLoginRepository,
   ],

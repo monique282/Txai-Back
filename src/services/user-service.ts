@@ -6,7 +6,7 @@ import {
 } from 'src/repositories/user-repository';
 
 @Injectable()
-export class userloginService {
+export class UserloginService {
   constructor(private readonly UserLoginRepository: UserLoginRepository) {}
 
   async loginUser({ cpf, password }: { cpf: string; password: string }) {
@@ -31,7 +31,7 @@ export class userloginService {
 }
 
 @Injectable()
-export class userRegisterService {
+export class UserRegisterService {
   constructor(
     private readonly UserRegisterRepository: UserRegisterRepository,
   ) {}
@@ -41,7 +41,8 @@ export class userRegisterService {
     email: string,
     name: string,
     nameUser: string,
-    administrator?: boolean,
+    administrator: boolean,
+    photo?: string,
   ) {
     const thereIsRegistrationCpf =
       await this.UserRegisterRepository.findByCpf(cpf);
@@ -63,6 +64,7 @@ export class userRegisterService {
       name,
       nameUser,
       administrator,
+      photo,
     );
 
     return [register];

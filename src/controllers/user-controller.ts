@@ -10,8 +10,8 @@ import {
 import { Response } from 'express';
 import { CreateUserDto, CreateUserRegisterDto } from 'src/schemas/user-schema';
 import {
-  userRegisterService,
-  userloginService,
+  UserRegisterService,
+  UserloginService,
 } from 'src/services/user-service';
 
 @Controller('health')
@@ -24,14 +24,14 @@ export class HealthController {
 
 @Controller('user')
 export class UsersLoginController {
-  constructor(private readonly userloginService: userloginService) {}
+  constructor(private readonly UserloginService: UserloginService) {}
 
   @Post()
   async usersLoginPost(
     @Body(new ValidationPipe()) body: CreateUserDto,
     @Res() res: Response,
   ) {
-    const user = await this.userloginService.loginUser(body);
+    const user = await this.UserloginService.loginUser(body);
 
     return res.status(HttpStatus.OK).send(user);
   }
@@ -39,23 +39,23 @@ export class UsersLoginController {
 
 @Controller('register')
 export class UsersRegisterController {
-  constructor(private readonly userRegisterService: userRegisterService) {}
+  constructor(private readonly UserRegisterService: UserRegisterService) {}
 
   @Post()
   async usersRegisterPost(
     @Body(new ValidationPipe()) body: CreateUserRegisterDto,
     @Res() res: Response,
   ) {
-    const { cpf, password, email, name, nameUser, administrator } = body;
-
-    const user = await this.userRegisterService.registerUser(
+    const { cpf, password, email, name, nameUser, administrator, photo } = body;
+    const user = await this.UserRegisterService.registerUser(
       cpf,
       password,
       email,
       name,
       nameUser,
       administrator,
+      photo,
     );
-    return res.status(HttpStatus.OK).send(user);
+    return res.status(HttpStatus.CREATED).send(user);
   }
 }

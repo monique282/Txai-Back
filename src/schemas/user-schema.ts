@@ -45,4 +45,7 @@ export class CreateUserRegisterDto {
   @IsBoolean({ message: 'O campo administrador deve ser um valor booleano' })
   @IsOptional()
   administrator?: boolean;
+
+  @IsOptional()
+  photo?: string;
 }

@@ -41,7 +41,8 @@ export class UserRegisterRepository {
     email: string,
     name: string,
     nameUser: string,
-    administrator: boolean = false,
+    administrator: boolean,
+    photo: string,
   ) {
     const newUser = await prisma.txaiUsers.create({
       data: {
@@ -51,6 +52,7 @@ export class UserRegisterRepository {
         name: name,
         nameUser: nameUser,
         administrator: administrator,
+        photo: photo,
       },
     });
     return newUser;
