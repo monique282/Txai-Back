@@ -24,4 +24,24 @@ export class BooksRepository {
     });
     return updatedBook;
   }
+
+  async CreateBook(
+    name: string,
+    value: number,
+    amount: number,
+    userId: number,
+  ) {
+    const book = await prisma.items.create({
+      data: {
+        name: name,
+        value: value,
+        amount: amount,
+        createdAt: new Date(),
+        user: {
+          connect: { id: userId },
+        },
+      },
+    });
+    return book;
+  }
 }

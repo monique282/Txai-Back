@@ -14,6 +14,7 @@ export class BooksService {
     }
     return allBooks;
   }
+
   async DeleteItem(id: number) {
     const bookDelet = await this.BooksRepository.DeleteItem(id);
     if (!bookDelet) {
@@ -24,6 +25,7 @@ export class BooksService {
     }
     return bookDelet;
   }
+
   async UpdateItem(id: number, body: any) {
     const bookUpdate = await this.BooksRepository.UpdateItem(id, body);
     if (!bookUpdate) {
@@ -33,5 +35,23 @@ export class BooksService {
       );
     }
     return bookUpdate;
+  }
+
+  async CreateBook(body: any) {
+    const { name, value, amount, userId } = body;
+
+    const book = await this.BooksRepository.CreateBook(
+      name,
+      value,
+      amount,
+      userId,
+    );
+    if (!book) {
+      throw new HttpException(
+        'Erro ao alterar dados do item',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    return book;
   }
 }

@@ -64,3 +64,17 @@ export class UpdateBookDto {
   @IsNumber()
   amount?: number;
 }
+
+export class BookDto {
+  @IsString()
+  name: string;
+
+  @IsNumber()
+  value: number;
+
+  @IsNumber()
+  amount: number;
+
+  @IsNumber()
+  userId: number;
+}

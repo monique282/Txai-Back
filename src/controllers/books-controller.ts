@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Post,
   Put,
   Res,
   UseGuards,
@@ -12,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/middlewares/AuthJwt';
-import { UpdateBookDto } from 'src/schemas/user-schema';
+import { BookDto, UpdateBookDto } from 'src/schemas/user-schema';
 import { BooksService } from 'src/services/books-service';
 
 @Controller('books')
@@ -23,6 +24,16 @@ export class BooksControllers {
   async BoolsAll(@Res() res: Response) {
     const books = await this.BooksService.BooksAll();
     return res.status(HttpStatus.OK).send(books);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async createBook(
+    @Body(new ValidationPipe()) body: BookDto,
+    @Res() res: Response,
+  ) {
+    const book = await this.BooksService.CreateBook(body);
+    return res.status(HttpStatus.CREATED).send(book);
   }
 }
 
