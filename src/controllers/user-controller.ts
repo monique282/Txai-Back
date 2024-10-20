@@ -46,7 +46,6 @@ export class UsersRegisterController {
     @Body(new ValidationPipe()) body: CreateUserRegisterDto,
     @Res() res: Response,
   ) {
-    console.log(body);
     const { cpf, password, email, name, nameUser, administrator, photo } = body;
     const user = await this.UserRegisterService.registerUser(
       cpf,
