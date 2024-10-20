@@ -7,4 +7,13 @@ export class BooksRepository {
     const book = await prisma.items.findMany();
     return book;
   }
+
+  async DeleteItem(id: number) {
+    const book = await prisma.items.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    return book;
+  }
 }

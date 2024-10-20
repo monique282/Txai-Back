@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 import {
   HealthController,
   UsersLoginController,
@@ -9,17 +12,35 @@ import {
   UserRegisterRepository,
 } from './repositories/user-repository';
 import { UserRegisterService, UserloginService } from './services/user-service';
-import { BooksControllers } from './controllers/books-controller';
+import {
+  BooksControllers,
+  ItemsController,
+} from './controllers/books-controller';
 import { BooksService } from './services/books-service';
 import { BooksRepository } from './repositories/books-repository';
+import { JwtStrategy } from './middlewares/validationToken-middleware';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: { expiresIn: '24h' },
+      }),
+    }),
+  ],
   controllers: [
     HealthController,
     UsersLoginController,
     UsersRegisterController,
     BooksControllers,
+    ItemsController,
   ],
   providers: [
     UserloginService,
@@ -28,6 +49,7 @@ import { BooksRepository } from './repositories/books-repository';
     UserLoginRepository,
     BooksService,
     BooksRepository,
+    JwtStrategy,
   ],
 })
 export class AppModule {}

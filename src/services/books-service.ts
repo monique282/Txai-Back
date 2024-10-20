@@ -14,4 +14,14 @@ export class BooksService {
     }
     return allBooks;
   }
+  async DeleteItem(id: number) {
+    const book = await this.BooksRepository.DeleteItem(id);
+    if (!book) {
+      throw new HttpException(
+        'Erro ao deletar item',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    return book;
+  }
 }
