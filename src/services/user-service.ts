@@ -33,8 +33,9 @@ export class UserloginService {
     const list = {
       email: login.email,
       nameUser: login.nameUser,
+      id: login.id,
     };
-
+console.log("lista ",list)
     return [list, session];
   }
 }

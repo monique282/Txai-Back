@@ -18,7 +18,7 @@ CREATE TABLE "txai_users" (
 CREATE TABLE "items" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(50) NOT NULL,
-    "value" INTEGER NOT NULL,
+    "value" DECIMAL(65,30) NOT NULL,
     "amount" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

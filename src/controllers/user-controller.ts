@@ -32,7 +32,7 @@ export class UsersLoginController {
     @Res() res: Response,
   ) {
     const user = await this.UserloginService.loginUser(body);
-    console.log(user);
+    console.log(user)
     return res.status(HttpStatus.OK).send(user);
   }
 }
