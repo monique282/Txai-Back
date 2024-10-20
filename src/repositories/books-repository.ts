@@ -16,4 +16,12 @@ export class BooksRepository {
     });
     return book;
   }
+
+  async UpdateItem(id: number, body: any) {
+    const updatedBook = await prisma.items.update({
+      where: { id },
+      data: body,
+    });
+    return updatedBook;
+  }
 }

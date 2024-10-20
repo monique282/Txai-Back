@@ -14,7 +14,8 @@ import {
 import { UserRegisterService, UserloginService } from './services/user-service';
 import {
   BooksControllers,
-  ItemsController,
+  ItemsDeleteController,
+  ItemsUpdateController,
 } from './controllers/books-controller';
 import { BooksService } from './services/books-service';
 import { BooksRepository } from './repositories/books-repository';
@@ -40,7 +41,8 @@ import { JwtStrategy } from './middlewares/validationToken-middleware';
     UsersLoginController,
     UsersRegisterController,
     BooksControllers,
-    ItemsController,
+    ItemsDeleteController,
+    ItemsUpdateController,
   ],
   providers: [
     UserloginService,

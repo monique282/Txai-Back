@@ -5,6 +5,7 @@ import {
   Length,
   IsBoolean,
   IsOptional,
+  IsNumber,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -48,4 +49,18 @@ export class CreateUserRegisterDto {
 
   @IsOptional()
   photo?: string;
+}
+
+export class UpdateBookDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsNumber()
+  value?: number;
+
+  @IsOptional()
+  @IsNumber()
+  amount?: number;
 }
