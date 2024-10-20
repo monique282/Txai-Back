@@ -35,7 +35,6 @@ export class UserloginService {
       nameUser: login.nameUser,
       id: login.id,
     };
-console.log("lista ",list)
     return [list, session];
   }
 }
