@@ -1,6 +1,8 @@
 import prisma from '../src/dataBase';
 
 async function main() {
+  const users = await prisma.txaiUsers.count();
+  if (users > 2) return;
   await prisma.txaiUsers.createMany({
     data: [
       {
